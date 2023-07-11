@@ -1,8 +1,9 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:my_notes/features/home/presentaion/views/widgets/custom_app_bar.dart';
 
 import 'list_view_item.dart';
-import 'note_item.dart';
 
 class NotesViewBody extends StatelessWidget {
   const NotesViewBody({super.key});
@@ -15,7 +16,11 @@ class NotesViewBody extends StatelessWidget {
         children: const [
           SizedBox(height: 50),
           CustomAppBar(),
-          Expanded(child: ListViewNotes()),
+          Expanded(
+              child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 8),
+            child: ListViewNotes(),
+          )),
         ],
       ),
     );
