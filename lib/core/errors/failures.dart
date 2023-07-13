@@ -1,3 +1,5 @@
-abstract class Failure {}
+abstract class Failure {
+  static String errMassage = "there is wronge!";
+}
 
-class ServierFailure extends Failure {}
+class AnyFailure extends Failure {}
