@@ -8,31 +8,64 @@ class AddNoteBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
+    return const Padding(
+      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 32),
       child: SingleChildScrollView(
-        child: Column(
-          children: const [
-            CustomTextField(
-              hint: "title note",
-              maxline: 1,
-            ),
-            SizedBox(
-              height: 16,
-            ),
-            CustomTextField(
-              hint: "containt note",
-              maxline: 4,
-            ),
-            SizedBox(
-              height: 16,
-            ),
-            SizedBox(
-              height: 28,
-            ),
-            CustomButton()
-          ],
-        ),
+        child: AddNoteForm(),
+      ),
+    );
+  }
+}
+
+class AddNoteForm extends StatefulWidget {
+  const AddNoteForm({super.key});
+
+  @override
+  State<AddNoteForm> createState() => _AddNoteFormState();
+}
+
+class _AddNoteFormState extends State<AddNoteForm> {
+  final GlobalKey<FormState> formKey = GlobalKey();
+  AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
+  String? title, subTitle;
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+      key: formKey,
+      autovalidateMode: autovalidateMode,
+      child: Column(
+        children: [
+          CustomTextField(
+            onSaved: (value) {
+              title = value;
+            },
+            hint: "title note",
+            maxline: 1,
+          ),
+          const SizedBox(
+            height: 16,
+          ),
+          CustomTextField(
+            onSaved: (value) {
+              subTitle = value;
+            },
+            hint: "containt note",
+            maxline: 4,
+          ),
+          const SizedBox(
+            height: 44,
+          ),
+          CustomButton(
+            onTap: () {
+              if (formKey.currentState!.validate()) {
+                formKey.currentState!.save();
+              } else {
+                autovalidateMode = AutovalidateMode.always;
+                setState(() {});
+              }
+            },
+          )
+        ],
       ),
     );
   }
