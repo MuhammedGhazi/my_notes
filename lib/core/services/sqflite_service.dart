@@ -8,6 +8,7 @@ class SqfliteService {
     String databasePath = await getDatabasesPath();
     String path = join(databasePath, "notes.db");
     return await openDatabase(
+      version: 1,
       path,
       onCreate: _onCreate,
     );
