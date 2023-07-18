@@ -11,9 +11,9 @@ class NoteRepoEmpl extends NoteRepo {
   Future<Either<Failure, int>> addNote(NoteModel noteModel) async {
     try {
       Database? db = await sqls.db;
-      int? done = await db?.insert("table", noteModel.toMap());
+      int? done = await db?.insert("notes", noteModel.toMap());
       return (right(done!));
-    } on Exception catch (e) {
+    } on Exception {
       return (left(AnyFailure()));
     }
   }
@@ -23,7 +23,7 @@ class NoteRepoEmpl extends NoteRepo {
     try {
       Database? db = await sqls.db;
       return (right(
-          await db!.delete("table", where: "title:?", whereArgs: [title])));
+          await db!.delete("notes", where: "title:?", whereArgs: [title])));
     } catch (e) {
       return (left(AnyFailure()));
     }
@@ -33,26 +33,50 @@ class NoteRepoEmpl extends NoteRepo {
   Future<Either<Failure, List<NoteModel>>> getAllNotes() async {
     try {
       Database? db = await sqls.db;
-      List<Map> map = await db!.query(
-        "table",
+      List<Map<String, dynamic>> map = await db!.query(
+        "notes",
         columns: ["title", "subtitle", "date", "color"],
       );
       List<NoteModel> resultNotes = [];
-      for (var element in map) {
-        resultNotes.add(NoteModel.fromMap(element));
+      for (var i = 0; i < map.length; i++) {
+        resultNotes.add(NoteModel.fromMap(map[i]));
       }
+
+      // for (var element in map) {
+      //   print(element);
+      //   //resultNotes.add(NoteModel.fromMap(element));
+      // }
       return (right(resultNotes));
     } catch (e) {
       return (left(AnyFailure()));
     }
   }
 
+  //77777777777777
+  Future<Either<Failure, List<Map>>> getAllNotesMap() async {
+    try {
+      Database? db = await sqls.db;
+      List<Map> map = await db!.query(
+        "notes",
+        columns: ["title", "subtitle", "date", "color"],
+      );
+      // List<NoteModel> resultNotes = [];
+      // for (var element in map) {
+      //   resultNotes.add(NoteModel.fromMap(element));
+      // }
+      return (right(map));
+    } catch (e) {
+      return (left(AnyFailure()));
+    }
+  }
+  //77777777777
+
   @override
   Future<Either<Failure, int>> updateNote(NoteModel noteModel) async {
     try {
       Database? db = await sqls.db;
       return (right(await db!.update(
-        "table",
+        "notes",
         noteModel.toMap(),
         where: "title:?",
         whereArgs: [noteModel.title],

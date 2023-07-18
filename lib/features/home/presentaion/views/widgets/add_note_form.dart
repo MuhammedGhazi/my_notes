@@ -16,7 +16,7 @@ class AddNoteForm extends StatefulWidget {
 class _AddNoteFormState extends State<AddNoteForm> {
   final GlobalKey<FormState> formKey = GlobalKey();
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
-  String? title, subTitle;
+  String? title, subtitle;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +37,7 @@ class _AddNoteFormState extends State<AddNoteForm> {
           ),
           CustomTextField(
             onSaved: (value) {
-              subTitle = value;
+              subtitle = value;
             },
             hint: "containt note",
             maxline: 4,
@@ -54,7 +54,7 @@ class _AddNoteFormState extends State<AddNoteForm> {
                     formKey.currentState!.save();
                     NoteModel noteModel = NoteModel(
                         title: title!,
-                        subTitle: subTitle!,
+                        subtitle: subtitle!,
                         date: DateTime.now().toString(),
                         color: Colors.blue.value);
                     BlocProvider.of<AddNoteCubit>(context).addNote(noteModel);
