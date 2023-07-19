@@ -16,7 +16,7 @@ class NoteItem extends StatelessWidget {
         },
         child: Container(
           decoration: BoxDecoration(
-              color: Colors.amber[200],
+              color: Color(note.color),
               borderRadius: BorderRadius.circular(16)),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
