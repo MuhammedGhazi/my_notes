@@ -5,8 +5,4 @@ abstract class NotesState {}
 
 class NotesInitial extends NotesState {}
 
-class NotesFailure extends NotesState {
-  final String errMessage;
-
-  NotesFailure(this.errMessage);
-}
+class SuccessNotes extends NotesState {}

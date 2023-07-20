@@ -28,7 +28,6 @@ class _HomeState extends State<Home> {
           ElevatedButton(
               onPressed: () async {
                 var notes = await noteRepoEmpl.getAllNotes();
-                notes.fold((fail) {}, (notes) {});
               },
               child: const Text("read data"))
         ],

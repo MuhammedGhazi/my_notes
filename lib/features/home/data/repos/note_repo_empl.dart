@@ -30,7 +30,7 @@ class NoteRepoEmpl extends NoteRepo {
   }
 
   @override
-  Future<Either<Failure, List<NoteModel>>> getAllNotes() async {
+  Future<List<NoteModel>> getAllNotes() async {
     try {
       Database? db = await sqls.db;
       List<Map<String, dynamic>> map = await db!.query(
@@ -46,9 +46,9 @@ class NoteRepoEmpl extends NoteRepo {
       //   print(element);
       //   //resultNotes.add(NoteModel.fromMap(element));
       // }
-      return (right(resultNotes));
+      return (resultNotes);
     } catch (e) {
-      return (left(AnyFailure()));
+      return [];
     }
   }
 

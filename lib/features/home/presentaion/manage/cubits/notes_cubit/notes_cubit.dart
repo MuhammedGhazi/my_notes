@@ -8,15 +8,17 @@ import 'package:my_notes/features/home/data/repos/note_repo_empl.dart';
 part 'notes_state.dart';
 
 class NotesCubit extends Cubit<NotesState> {
-  NotesCubit(this.noteRepoEmpl) : super(NotesInitial());
-  final NoteRepoEmpl noteRepoEmpl;
+  NotesCubit() : super(NotesInitial());
+
   List<NoteModel>? notes;
   getNotes() async {
+    NoteRepoEmpl noteRepoEmpl = NoteRepoEmpl();
     var result = await noteRepoEmpl.getAllNotes();
-    result.fold((fail) {
-      emit(NotesFailure(fail.toString()));
-    }, (trueResult) {
-      notes = trueResult;
-    });
+    notes = result;
+    // result.fold((fail) {
+    emit(SuccessNotes());
+    // }, (trueResult) {
+    //   notes = trueResult;
+    // });
   }
 }

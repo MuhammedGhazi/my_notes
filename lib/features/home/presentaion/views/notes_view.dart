@@ -13,7 +13,7 @@ class NotesView extends StatelessWidget {
   Widget build(BuildContext context) {
     NoteRepoEmpl noteRepoEmpl = NoteRepoEmpl();
     return BlocProvider(
-      create: (context) => NotesCubit(noteRepoEmpl),
+      create: (context) => NotesCubit(),
       child: Scaffold(
         body: const NotesViewBody(),
         floatingActionButton: FloatingActionButton(
