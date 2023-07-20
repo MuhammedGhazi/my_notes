@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:my_notes/features/home/data/repos/note_repo_empl.dart';
+// import 'package:my_notes/features/home/data/repos/note_repo_empl.dart';
+// import 'package:my_notes/features/home/presentaion/manage/cubits/add_note_cubit/add_note_cubit.dart';
+import 'package:my_notes/features/home/presentaion/manage/cubits/delete_note/delete_note_cubit.dart';
 import 'package:my_notes/features/home/presentaion/manage/cubits/notes_cubit/notes_cubit.dart';
 import 'package:my_notes/features/home/presentaion/views/widgets/notes_View_body.dart';
 
@@ -11,9 +13,15 @@ class NotesView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    NoteRepoEmpl noteRepoEmpl = NoteRepoEmpl();
-    return BlocProvider(
-      create: (context) => NotesCubit(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<NotesCubit>(
+          create: (BuildContext context) => NotesCubit(),
+        ),
+        BlocProvider<DeleteNoteCubit>(
+          create: (BuildContext context) => DeleteNoteCubit(),
+        ),
+      ],
       child: Scaffold(
         body: const NotesViewBody(),
         floatingActionButton: FloatingActionButton(

@@ -27,7 +27,7 @@ class _HomeState extends State<Home> {
               child: const Text("insert data")),
           ElevatedButton(
               onPressed: () async {
-                var notes = await noteRepoEmpl.getAllNotes();
+                // var notes = await noteRepoEmpl.getAllNotes();
               },
               child: const Text("read data"))
         ],

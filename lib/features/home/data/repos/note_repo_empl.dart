@@ -23,7 +23,7 @@ class NoteRepoEmpl extends NoteRepo {
     try {
       Database? db = await sqls.db;
       return (right(
-          await db!.delete("notes", where: "title:?", whereArgs: [title])));
+          await db!.delete("notes", where: "title = ?", whereArgs: [title])));
     } catch (e) {
       return (left(AnyFailure()));
     }
