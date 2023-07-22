@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:my_notes/core/constantes.dart';
 import 'package:my_notes/features/home/data/models/note_model.dart';
 import 'package:my_notes/features/home/presentaion/manage/cubits/add_note_cubit/add_note_cubit.dart';
 import 'package:my_notes/features/home/presentaion/manage/cubits/notes_cubit/notes_cubit.dart';
@@ -47,6 +48,7 @@ class _AddNoteFormState extends State<AddNoteForm> {
           const SizedBox(
             height: 44,
           ),
+          const SizedBox(height: 48 * 2, child: ListColors()),
           BlocBuilder<AddNoteCubit, AddNoteState>(
             builder: (context, state) {
               return CustomButton(
@@ -73,6 +75,42 @@ class _AddNoteFormState extends State<AddNoteForm> {
             },
           )
         ],
+      ),
+    );
+  }
+}
+
+class ListColors extends StatelessWidget {
+  const ListColors({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemCount: 5,
+      scrollDirection: Axis.horizontal,
+      itemBuilder: (context, index) {
+        return ColorItem(
+          indexColors: index,
+        );
+      },
+    );
+  }
+}
+
+class ColorItem extends StatelessWidget {
+  const ColorItem({
+    super.key,
+    required this.indexColors,
+  });
+  final int indexColors;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 6),
+      child: CircleAvatar(
+        backgroundColor: Color(kListColors[indexColors]),
+        radius: 48,
       ),
     );
   }
