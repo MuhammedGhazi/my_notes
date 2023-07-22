@@ -6,6 +6,7 @@ import 'package:my_notes/features/home/data/models/note_model.dart';
 abstract class NoteRepo {
   Future<List<NoteModel>> getAllNotes();
   Future<Either<Failure, int>> addNote(NoteModel noteModel);
-  Future<Either<Failure, int>> updateNote(NoteModel noteModel);
+  Future<Either<Failure, int>> updateNote(
+      NoteModel noteUpdated, String oldTitle);
   Future<Either<Failure, int>> deleteNote(String title);
 }

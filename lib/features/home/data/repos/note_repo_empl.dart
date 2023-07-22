@@ -72,14 +72,15 @@ class NoteRepoEmpl extends NoteRepo {
   //77777777777
 
   @override
-  Future<Either<Failure, int>> updateNote(NoteModel noteModel) async {
+  Future<Either<Failure, int>> updateNote(
+      NoteModel noteUpdated, String oldTitle) async {
     try {
       Database? db = await sqls.db;
       return (right(await db!.update(
         "notes",
-        noteModel.toMap(),
-        where: "title:?",
-        whereArgs: [noteModel.title],
+        noteUpdated.toMap(),
+        where: "title= ?",
+        whereArgs: [oldTitle],
       )));
     } catch (e) {
       return (left(AnyFailure()));
