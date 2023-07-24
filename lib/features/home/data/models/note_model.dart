@@ -4,7 +4,7 @@ class NoteModel {
   String title;
   String subtitle;
   final String date;
-  final int color;
+  int color;
 
   NoteModel(
       {required this.title,

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:my_notes/core/constantes.dart';
 import 'package:my_notes/features/home/data/models/note_model.dart';
 import 'package:my_notes/features/home/presentaion/manage/cubits/notes_cubit/notes_cubit.dart';
 import 'package:my_notes/features/home/presentaion/manage/cubits/update_note/update_note_cubit.dart';
 import 'package:my_notes/features/home/presentaion/views/widgets/custom_app_bar.dart';
 import 'package:my_notes/features/home/presentaion/views/widgets/custom_text_field.dart';
+
+import 'widgets/color_item.dart';
 
 class EditNoteView extends StatefulWidget {
   const EditNoteView({super.key, required this.note});
@@ -36,8 +39,10 @@ class _EditNoteViewState extends State<EditNoteView> {
                 String oldTitle = widget.note.title;
                 widget.note.title = title ?? widget.note.title;
                 widget.note.subtitle = subtitle ?? widget.note.subtitle;
-                print(oldTitle);
-                print(widget.note.title);
+                widget.note.color =
+                    BlocProvider.of<UpdateNoteCubit>(context).color.value;
+                // print(oldTitle);
+                // print(widget.note.title);
                 BlocProvider.of<UpdateNoteCubit>(context)
                     .updateNote(note: widget.note, oldTitle: oldTitle);
               },
@@ -64,8 +69,49 @@ class _EditNoteViewState extends State<EditNoteView> {
                 subtitle = p0;
               },
             ),
+            const SizedBox(
+              height: 8,
+            ),
+            const UpdateNoteListColors()
           ],
         ),
+      ),
+    );
+  }
+}
+
+class UpdateNoteListColors extends StatefulWidget {
+  const UpdateNoteListColors({super.key});
+
+  @override
+  State<UpdateNoteListColors> createState() => _UpdateNoteListColorsState();
+}
+
+class _UpdateNoteListColorsState extends State<UpdateNoteListColors> {
+  int courntIndex = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 48 * 2,
+      child: ListView.builder(
+        itemCount: 5,
+        scrollDirection: Axis.horizontal,
+        itemBuilder: (context, index) {
+          return GestureDetector(
+            onTap: () {
+              courntIndex = index;
+
+              BlocProvider.of<UpdateNoteCubit>(context).color =
+                  Color(kListColors[index]);
+              setState(() {});
+            },
+            child: ColorItem(
+              isChacked: courntIndex == index,
+              indexColors: index,
+            ),
+          );
+        },
       ),
     );
   }

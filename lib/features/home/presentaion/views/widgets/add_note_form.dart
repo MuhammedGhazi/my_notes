@@ -6,6 +6,7 @@ import 'package:my_notes/features/home/data/models/note_model.dart';
 import 'package:my_notes/features/home/presentaion/manage/cubits/add_note_cubit/add_note_cubit.dart';
 import 'package:my_notes/features/home/presentaion/manage/cubits/notes_cubit/notes_cubit.dart';
 
+import 'color_item.dart';
 import 'custom_button.dart';
 import 'custom_text_field.dart';
 
@@ -46,9 +47,12 @@ class _AddNoteFormState extends State<AddNoteForm> {
             maxline: 4,
           ),
           const SizedBox(
-            height: 44,
+            height: 24,
           ),
-          const SizedBox(height: 48 * 2, child: ListColors()),
+          const SizedBox(height: 48 * 2, child: AddNoteListColors()),
+          const SizedBox(
+            height: 24,
+          ),
           BlocBuilder<AddNoteCubit, AddNoteState>(
             builder: (context, state) {
               return CustomButton(
@@ -63,7 +67,8 @@ class _AddNoteFormState extends State<AddNoteForm> {
                         title: title!,
                         subtitle: subtitle!,
                         date: formatedCurrentDate,
-                        color: Colors.blue.value);
+                        color:
+                            BlocProvider.of<AddNoteCubit>(context).color.value);
                     BlocProvider.of<AddNoteCubit>(context).addNote(noteModel);
                     BlocProvider.of<NotesCubit>(context).getNotes();
                   } else {
@@ -73,45 +78,41 @@ class _AddNoteFormState extends State<AddNoteForm> {
                 },
               );
             },
-          )
+          ),
         ],
       ),
     );
   }
 }
 
-class ListColors extends StatelessWidget {
-  const ListColors({super.key});
+class AddNoteListColors extends StatefulWidget {
+  const AddNoteListColors({super.key});
 
+  @override
+  State<AddNoteListColors> createState() => _AddNoteListColorsState();
+}
+
+class _AddNoteListColorsState extends State<AddNoteListColors> {
+  int courntIndex = 0;
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
       itemCount: 5,
       scrollDirection: Axis.horizontal,
       itemBuilder: (context, index) {
-        return ColorItem(
-          indexColors: index,
+        return GestureDetector(
+          onTap: () {
+            courntIndex = index;
+            BlocProvider.of<AddNoteCubit>(context).color =
+                Color(kListColors[index]);
+            setState(() {});
+          },
+          child: ColorItem(
+            isChacked: courntIndex == index,
+            indexColors: index,
+          ),
         );
       },
-    );
-  }
-}
-
-class ColorItem extends StatelessWidget {
-  const ColorItem({
-    super.key,
-    required this.indexColors,
-  });
-  final int indexColors;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 6),
-      child: CircleAvatar(
-        backgroundColor: Color(kListColors[indexColors]),
-        radius: 48,
-      ),
     );
   }
 }
